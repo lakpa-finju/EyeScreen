@@ -70,7 +70,29 @@ while True:
             y = int(landmarks[idx].y * frame_h)
             cv2.circle(frame, (x, y), 3, (0, 255, 0))
 
-        # Detect wink (blinking)
+        #mouth open is action
+        mouth = [landmarks[13], landmarks[14]]
+        for landmark in mouth:
+            x = int(landmark.x * frame_w)
+            y = int(landmark.y * frame_h)
+            cv2.circle(frame, (x, y), 3, (0, 255, 255))
+
+        if (abs(mouth[0].y - mouth[1].y)) > 0.012:
+            print("mouth open")
+            pyautogui.click()
+
+        #detect right wink
+        right = [landmarks[374], landmarks[386]]
+        for landmark in right:
+            x = int(landmark.x * frame_w)
+            y = int(landmark.y * frame_h)
+            cv2.circle(frame, (x, y), 3, (0, 255, 255))
+
+        if (right[0].y - right[1].y) < 0.012:
+            print("right wink")
+            pyautogui.click()
+
+        # Detect left wink (blinking)
         left = [landmarks[145], landmarks[159]]
         for landmark in left:
             x = int(landmark.x * frame_w)
@@ -79,10 +101,12 @@ while True:
 
         current_time = cv2.getTickCount() / cv2.getTickFrequency()
         if (left[0].y - left[1].y) < 0.012:
-            if current_time - last_click_time >= click_interval:
-                print("wink")
-                pyautogui.click()
-                last_click_time = current_time  # Update last click time
+            print("wink")
+            pyautogui.click()
+#            if current_time - last_click_time >= click_interval:
+#                print("wink")
+#                pyautogui.click()
+#                last_click_time = current_time  # Update last click time
 
     # cv2.imshow('Eye Controlled Mouse', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):

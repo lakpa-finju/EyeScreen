@@ -74,7 +74,8 @@ while True:
             cv2.circle(frame, (x, y), 3, (0, 255, 0))
     
         #left eyebrow movement
-        model.left_eyebrow(frame,landmarks, frame_w, frame_h)
+        if model.left_eyebrow(frame,landmarks, frame_w, frame_h):
+            print("left eyebrow detected")
         #rigt eyebrow movement
         model.right_eyebrow(frame, landmarks, frame_w, frame_h)
         #mouth open is action

@@ -38,6 +38,8 @@ def move_mouse(screen_width, x, screen_height, y):
     
     pyautogui.moveTo(screen_x, screen_y)
 
+#check if text dictation is open
+isOpen = False
 while True:
     ret, frame = cam.read()
     if not ret:
@@ -76,7 +78,7 @@ while True:
         #rigt eyebrow movement
         model.right_eyebrow(frame, landmarks, frame_w, frame_h)
         #mouth open is action
-        model.mouth_open(frame, landmarks, frame_w, frame_h)
+        model.mouth_open(frame, landmarks, frame_w, frame_h, isOpen)
         #right wink
         model.right_wink(frame, landmarks, frame_w,frame_h)
         # Detect left wink (blinking)

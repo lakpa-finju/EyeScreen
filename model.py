@@ -2,6 +2,8 @@
 This file will contains all the method needed by the eyecursorinterface.py
 '''
 import cv2
+import pyautogui
+import time
 
 def left_eyebrow(frame, landmarks, frame_w, frame_h):
     #left eyebrow movement action
@@ -27,7 +29,7 @@ def right_eyebrow(frame, landmarks, frame_w, frame_h):
         print("right eyebrow detected")
         #pyautogui.click()
 
-def mouth_open(frame, landmarks, frame_w, frame_h):
+def mouth_open(frame, landmarks, frame_w, frame_h, isOpen:bool):
     #mouth open action
     mouth = [landmarks[13], landmarks[14]]
     for landmark in mouth:
@@ -35,10 +37,14 @@ def mouth_open(frame, landmarks, frame_w, frame_h):
         y = int(landmark.y * frame_h)
         cv2.circle(frame, (x, y), 3, (0, 255, 255))
 
-    if (abs(mouth[0].y - mouth[1].y)) > 0.012:
-        print("mouth open")
-        #pyautogui.press('ctrl')
-        #pyautogui.press('ctrl')
+    if isOpen:
+        pyautogui.press('esc')
+    else:
+        if (abs(mouth[0].y - mouth[1].y)) >0.1: #0.012:
+            print("mouth open")
+            #pyautogui.hotkey('ctrl','ctrl')
+            pyautogui.press('ctrl', presses=2)
+            isOpen = True
 
 def right_wink(frame, landmarks, frame_w, frame_h):
     #detect right wink

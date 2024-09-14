@@ -70,6 +70,28 @@ while True:
             y = int(landmarks[idx].y * frame_h)
             cv2.circle(frame, (x, y), 3, (0, 255, 0))
 
+        #left eyebrow movement action
+        left_eye_brow = [landmarks[66], landmarks[69]]
+        for landmark in left_eye_brow:
+            x = int(landmark.x * frame_w)
+            y = int(landmark.y * frame_h)
+            cv2.circle(frame, (x, y), 3, (0, 255, 255))
+
+        if (abs(left_eye_brow[0].y - left_eye_brow[1].y)) < 0.040:
+            print("left eyebrow detected")
+            #pyautogui.click()
+
+        #right eyebrow movement action
+        right_eye_brow = [landmarks[296], landmarks[299]]
+        for landmark in right_eye_brow:
+            x = int(landmark.x * frame_w)
+            y = int(landmark.y * frame_h)
+            cv2.circle(frame, (x, y), 3, (0, 255, 255))
+
+        if (abs(right_eye_brow[0].y - right_eye_brow[1].y)) < 0.040:
+            print("right eyebrow detected")
+            #pyautogui.click()
+
         #mouth open is action
         mouth = [landmarks[13], landmarks[14]]
         for landmark in mouth:
@@ -108,7 +130,7 @@ while True:
 #                pyautogui.click()
 #                last_click_time = current_time  # Update last click time
 
-    # cv2.imshow('Eye Controlled Mouse', frame)
+    cv2.imshow('Eye Controlled Mouse', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 

@@ -101,7 +101,8 @@ while True:
 
         if (abs(mouth[0].y - mouth[1].y)) > 0.012:
             print("mouth open")
-            pyautogui.click()
+            pyautogui.press('ctrl')
+            pyautogui.press('ctrl')
 
         #detect right wink
         right = [landmarks[374], landmarks[386]]
@@ -112,7 +113,7 @@ while True:
 
         if (right[0].y - right[1].y) < 0.012:
             print("right wink")
-            pyautogui.click()
+            #pyautogui.click()
 
         # Detect left wink (blinking)
         left = [landmarks[145], landmarks[159]]
@@ -122,7 +123,7 @@ while True:
             cv2.circle(frame, (x, y), 3, (0, 255, 255))
 
         current_time = cv2.getTickCount() / cv2.getTickFrequency()
-        if (left[0].y - left[1].y) < 0.012:
+        if ((left[0].y - left[1].y) < 0.012) and not (abs(right[0].y - right[1].y) < 0.012):
             print("wink")
             pyautogui.click()
 #            if current_time - last_click_time >= click_interval:

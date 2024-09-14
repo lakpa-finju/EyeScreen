@@ -5,6 +5,23 @@ import cv2
 import pyautogui
 import time
 
+def eyebrows(frame, landmarks, frame_w, frame_h):
+    left_eye_brow = [landmarks[66], landmarks[69]]
+    right_eye_brow = [landmarks[296], landmarks[299]]
+#    for landmarkLeft, landmarkRight in zip(left_eyebrow, right_eyebrow):
+#        #left eyebrow
+#        xLeft = int(landmarkLeft.x * frame_w)
+#        yLeft = int(landmarkLeft.y * frame_h)
+#        cv2.circle(frame, (xLeft, yLeft), 3, (0, 255, 255))
+#        #right eyebrow
+#        xRight = int(landmarkRight.x * frame_w)
+#        yRight = int(landmarkRight.y * frame_h)
+#        cv2.circle(frame, (xRight, yRight), 3, (0, 255, 255))
+
+    if (abs(left_eye_brow[0].y - left_eye_brow[1].y) < 0.040) and (abs(right_eye_brow[0].y - right_eye_brow[1].y) < 0.040):
+        print("both eyebrow detected")
+        pyautogui.scroll(10)
+
 def left_eyebrow(frame, landmarks, frame_w, frame_h):
     #left eyebrow movement action
     left_eye_brow = [landmarks[66], landmarks[69]]

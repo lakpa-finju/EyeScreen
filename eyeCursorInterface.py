@@ -73,10 +73,11 @@ while True:
             y = int(landmarks[idx].y * frame_h)
             cv2.circle(frame, (x, y), 3, (0, 255, 0))
     
+        model.eyebrows(frame, landmarks, frame_w, frame_h)
         #left eyebrow movement
-        model.left_eyebrow(frame,landmarks, frame_w, frame_h)
+        #model.left_eyebrow(frame,landmarks, frame_w, frame_h)
         #rigt eyebrow movement
-        model.right_eyebrow(frame, landmarks, frame_w, frame_h)
+        #model.right_eyebrow(frame, landmarks, frame_w, frame_h)
         #mouth open is action
         model.mouth_open(frame, landmarks, frame_w, frame_h, isOpen)
         #right wink

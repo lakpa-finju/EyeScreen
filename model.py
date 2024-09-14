@@ -72,4 +72,3 @@ def left_wink(frame, landmarks, frame_w, frame_h):
     if (abs(left[0].y - left[1].y) < 0.012) and (abs(right[0].y - right[1].y) > 0.015):
         print("left wink")
         pyautogui.click()
-

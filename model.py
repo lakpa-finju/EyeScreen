@@ -5,6 +5,28 @@ import cv2
 import pyautogui
 import time
 
+
+#apply happy face for down scroll
+def smile(frame, landmarks, frame_w, frame_h):
+    leftWisker = [landmarks[61]]
+    rightWisker = [landmarks[291]]#[269, 270, 409, 291, 375, 321, 405]
+    print('********')
+    print(abs(leftWisker[0].x - rightWisker[0].x))
+    print(abs(leftWisker[0].y - rightWisker[0].y))
+    for landmark in leftWisker:
+        x = int(landmark.x * frame_w)
+        y = int(landmark.y * frame_h)
+        cv2.circle(frame, (x, y), 3, (0, 255, 255))
+
+    for landmark in rightWisker:
+        x = int(landmark.x * frame_w)
+        y = int(landmark.y * frame_h)
+        cv2.circle(frame, (x, y), 3, (0, 255, 255))
+
+    if (abs(leftWisker[0].x - rightWisker[0].x) > 0.09) :
+        print("You smiled")
+        pyautogui.scroll(-10)
+
 def eyebrows(frame, landmarks, frame_w, frame_h):
     left_eye_brow = [landmarks[66], landmarks[69]]
     right_eye_brow = [landmarks[296], landmarks[299]]
@@ -89,3 +111,4 @@ def left_wink(frame, landmarks, frame_w, frame_h):
     if (abs(left[0].y - left[1].y) < 0.012) and (abs(right[0].y - right[1].y) > 0.015):
         print("left wink")
         pyautogui.mouseDown(button='left')
+

@@ -48,6 +48,7 @@ while True:
         break
 
     frame = cv2.flip(frame, 1)
+    #frame.flags.writeable = False
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     output = face_mesh.process(rgb_frame)
     landmark_points = output.multi_face_landmarks
@@ -57,7 +58,7 @@ while True:
     right_eye_landmarks = [362, 382, 383, 384, 385, 386, 387, 388, 390, 398]
     left_iris_landmarks = [468, 469, 470, 471]
     right_iris_landmarks = [473, 474, 475, 476]
-
+    MOUTH_LANDMARKS = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, 375, 321, 405, 314, 17, 84, 181, 91, 146, 61]
     frame_h, frame_w, _ = frame.shape
     if landmark_points:
         landmarks = landmark_points[0].landmark
@@ -77,6 +78,11 @@ while True:
             y = int(landmarks[idx].y * frame_h)
             cv2.circle(frame, (x, y), 3, (0, 255, 0))
     
+#        for idx in MOUTH_LANDMARKS:
+#            x = int(landmarks[idx].x * frame_w)
+#            y = int(landmarks[idx].y * frame_h)
+#            cv2.circle(frame, (x, y), 3, (0, 255, 0))
+#
         model.eyebrows(frame, landmarks, frame_w, frame_h)
 
         #left eyebrow movement
@@ -89,6 +95,8 @@ while True:
         model.right_wink(frame, landmarks, frame_w,frame_h)
         # Detect left wink (blinking)
         # model.left_wink(frame, landmarks,frame_w,frame_h)
+        # Detect Smile
+        model.smile(frame, landmarks,frame_w,frame_h)
 
 
         left = [landmarks[145], landmarks[159]]

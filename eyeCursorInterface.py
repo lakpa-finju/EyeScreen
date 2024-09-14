@@ -67,20 +67,22 @@ while True:
         avg_y = sum(landmarks[idx].y for idx in right_iris_landmarks) / len(right_iris_landmarks)
         if not calabrated:
             pass
-        # Draw landmarks for the iris
-        # for idx in right_iris_landmarks:
-        #     x = int(landmarks[idx].x * frame_w)
-        #     y = int(landmarks[idx].y * frame_h)
-        #     cv2.circle(frame, (x, y), 3, (0, 255, 0))
-
             
         # Move the mouse cursor based on smoothed eye positions
         move_mouse(screen_w, avg_x, screen_h, avg_y)
 
+        # Draw landmarks for the iris
+        for idx in right_iris_landmarks:
+            x = int(landmarks[idx].x * frame_w)
+            y = int(landmarks[idx].y * frame_h)
+            cv2.circle(frame, (x, y), 3, (0, 255, 0))
+    
+        model.eyebrows(frame, landmarks, frame_w, frame_h)
+
         #left eyebrow movement
-        model.left_eyebrow(frame,landmarks, frame_w, frame_h)
-        #rigt eyebrow movement
-        model.right_eyebrow(frame, landmarks, frame_w, frame_h)
+        #model.left_eyebrow(frame,landmarks, frame_w, frame_h)
+        #right eyebrow movement
+        #model.right_eyebrow(frame, landmarks, frame_w, frame_h)
         #mouth open is action
         model.mouth_open(frame, landmarks, frame_w, frame_h, isOpen)
         #right wink

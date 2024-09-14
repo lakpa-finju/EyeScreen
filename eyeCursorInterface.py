@@ -3,6 +3,7 @@ import mediapipe as mp
 import pyautogui
 import numpy as np
 import model
+import calabration
 
 cam = cv2.VideoCapture(0)
 face_mesh = mp.solutions.face_mesh.FaceMesh(refine_landmarks=True)
@@ -40,6 +41,7 @@ def move_mouse(screen_width, x, screen_height, y):
 
 #check if text dictation is open
 isOpen = False
+calabrated = False
 while True:
     ret, frame = cam.read()
     if not ret:
@@ -63,7 +65,9 @@ while True:
         # Calculate average position of the iris
         avg_x = sum(landmarks[idx].x for idx in right_iris_landmarks) / len(right_iris_landmarks)
         avg_y = sum(landmarks[idx].y for idx in right_iris_landmarks) / len(right_iris_landmarks)
-
+        if not calabrated:
+            pass
+            
         # Move the mouse cursor based on smoothed eye positions
         move_mouse(screen_w, avg_x, screen_h, avg_y)
 
@@ -74,9 +78,10 @@ while True:
             cv2.circle(frame, (x, y), 3, (0, 255, 0))
     
         model.eyebrows(frame, landmarks, frame_w, frame_h)
+
         #left eyebrow movement
         #model.left_eyebrow(frame,landmarks, frame_w, frame_h)
-        #rigt eyebrow movement
+        #right eyebrow movement
         #model.right_eyebrow(frame, landmarks, frame_w, frame_h)
         #mouth open is action
         model.mouth_open(frame, landmarks, frame_w, frame_h, isOpen)

@@ -2,6 +2,7 @@ import cv2
 import mediapipe as mp
 import pyautogui
 import numpy as np
+import model
 
 cam = cv2.VideoCapture(0)
 face_mesh = mp.solutions.face_mesh.FaceMesh(refine_landmarks=True)
@@ -69,52 +70,15 @@ while True:
             x = int(landmarks[idx].x * frame_w)
             y = int(landmarks[idx].y * frame_h)
             cv2.circle(frame, (x, y), 3, (0, 255, 0))
-
-        #left eyebrow movement action
-        left_eye_brow = [landmarks[66], landmarks[69]]
-        for landmark in left_eye_brow:
-            x = int(landmark.x * frame_w)
-            y = int(landmark.y * frame_h)
-            cv2.circle(frame, (x, y), 3, (0, 255, 255))
-
-        if (abs(left_eye_brow[0].y - left_eye_brow[1].y)) < 0.040:
-            print("left eyebrow detected")
-            #pyautogui.click()
-
-        #right eyebrow movement action
-        right_eye_brow = [landmarks[296], landmarks[299]]
-        for landmark in right_eye_brow:
-            x = int(landmark.x * frame_w)
-            y = int(landmark.y * frame_h)
-            cv2.circle(frame, (x, y), 3, (0, 255, 255))
-
-        if (abs(right_eye_brow[0].y - right_eye_brow[1].y)) < 0.040:
-            print("right eyebrow detected")
-            #pyautogui.click()
-
+    
+        #left eyebrow movement
+        model.left_eyebrow(frame,landmarks, frame_w, frame_h)
+        #rigt eyebrow movement
+        model.right_eyebrow(frame, landmarks, frame_w, frame_h)
         #mouth open is action
-        mouth = [landmarks[13], landmarks[14]]
-        for landmark in mouth:
-            x = int(landmark.x * frame_w)
-            y = int(landmark.y * frame_h)
-            cv2.circle(frame, (x, y), 3, (0, 255, 255))
-
-        if (abs(mouth[0].y - mouth[1].y)) > 0.012:
-            print("mouth open")
-            pyautogui.press('ctrl')
-            pyautogui.press('ctrl')
-
-        #detect right wink
-        right = [landmarks[374], landmarks[386]]
-        for landmark in right:
-            x = int(landmark.x * frame_w)
-            y = int(landmark.y * frame_h)
-            cv2.circle(frame, (x, y), 3, (0, 255, 255))
-
-        if (right[0].y - right[1].y) < 0.012:
-            print("right wink")
-            #pyautogui.click()
-
+        model.mouth_open(frame, landmarks, frame_w, frame_h)
+        #right wink
+        model.right_wink(frame, landmarks, frame_w,frame_h)
         # Detect left wink (blinking)
         left = [landmarks[145], landmarks[159]]
         for landmark in left:
@@ -123,7 +87,7 @@ while True:
             cv2.circle(frame, (x, y), 3, (0, 255, 255))
 
         current_time = cv2.getTickCount() / cv2.getTickFrequency()
-        if ((left[0].y - left[1].y) < 0.012) and not (abs(right[0].y - right[1].y) < 0.012):
+        if ((left[0].y - left[1].y) < 0.012):
             print("wink")
             pyautogui.click()
 #            if current_time - last_click_time >= click_interval:

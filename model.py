@@ -74,7 +74,7 @@ def right_wink(frame, landmarks, frame_w, frame_h):
 
     if (abs(right[0].y - right[1].y) < 0.012) and (abs(left[0].y - left[1].y) > 0.013):
         print("right wink")
-        pyautogui.click(button='right')
+        pyautogui.mouseDown(button='right')
 
 def left_wink(frame, landmarks, frame_w, frame_h):
     # Detect left wink (blinking)
@@ -88,4 +88,8 @@ def left_wink(frame, landmarks, frame_w, frame_h):
     current_time = cv2.getTickCount() / cv2.getTickFrequency()
     if (abs(left[0].y - left[1].y) < 0.012) and (abs(right[0].y - right[1].y) > 0.015):
         print("left wink")
+<<<<<<< HEAD
         pyautogui.click()
+=======
+        pyautogui.mouseDown(button='left')
+>>>>>>> main

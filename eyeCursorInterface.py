@@ -83,21 +83,27 @@ while True:
         #right wink
         model.right_wink(frame, landmarks, frame_w,frame_h)
         # Detect left wink (blinking)
-        #model.left_wink(frame, landmarks,frame_w,frame_h)
+        # model.left_wink(frame, landmarks,frame_w,frame_h)
+
+
         left = [landmarks[145], landmarks[159]]
+        right = [landmarks[374], landmarks[386]]
         for landmark in left:
             x = int(landmark.x * frame_w)
             y = int(landmark.y * frame_h)
             cv2.circle(frame, (x, y), 3, (0, 255, 255))
 
         current_time = cv2.getTickCount() / cv2.getTickFrequency()
-        if ((left[0].y - left[1].y) < 0.012):
-            print("wink")
-            pyautogui.click()
+        if (abs(left[0].y - left[1].y) < 0.012) and (abs(right[0].y - right[1].y) > 0.015):
+            x = 0
             if current_time - last_click_time >= click_interval:
                 print("wink")
                 pyautogui.click()
                 last_click_time = current_time  # Update last click time
+            else:
+                print("long wink")
+                pyautogui.mouseDown(button='left')
+            
 
     cv2.imshow('Eye Controlled Mouse', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):

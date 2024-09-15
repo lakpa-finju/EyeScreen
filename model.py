@@ -6,6 +6,17 @@ import pyautogui
 import time
 
 
+#pupil up and down movement for enter
+def pressEnter(frame, landmarks, frame_w, frame_h):
+    left_pupil = [landmarks[145],landmarks[468]]
+    right_pupil = [landmarks[374],landmarks[473]]
+    print('***********')
+    print(left_pupil[0].y - left_pupil[1].y)
+    print(right_pupil[0].y - right_pupil[1].y)
+    if (left_pupil[0].y - left_pupil[1].y >= 0.014) and (right_pupil[0].y - right_pupil[1].y >=0.014):
+        print("enter")
+        pyautogui.press('enter')
+
 #pupil movement for back and forth between pages 
 def back_n_forth(frame, landmarks, frame_w, frame_h):
     left_pupil = [landmarks[133],landmarks[468]]

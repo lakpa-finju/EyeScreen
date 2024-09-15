@@ -87,6 +87,9 @@ while True:
 #            x = int(landmarks[idx].x * frame_w)
 #            y = int(landmarks[idx].y * frame_h)
 #            cv2.circle(frame, (x, y), 3, (0, 255, 0))
+
+        #pupil up and down for pressEnter
+        model.pressEnter(frame, landmarks, frame_w, frame_h)
 #
         #pupil movement for back and forth
         model.back_n_forth(frame, landmarks, frame_w, frame_h)

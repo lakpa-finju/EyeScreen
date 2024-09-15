@@ -23,7 +23,7 @@ def smile(frame, landmarks, frame_w, frame_h):
         y = int(landmark.y * frame_h)
         cv2.circle(frame, (x, y), 3, (0, 255, 255))
 
-    if (abs(leftWisker[0].x - rightWisker[0].x) > 0.09) :
+    if (abs(leftWisker[0].x - rightWisker[0].x) > 0.10) :
         print("You smiled")
         pyautogui.scroll(-10)
 

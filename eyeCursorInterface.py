@@ -42,12 +42,8 @@ def move_mouse(screen_width, x, screen_height, y):
 
 #check if text dictation is open for speech to text
 isOpen = False
-<<<<<<< HEAD
-calabrated = False
-=======
 #boolean to control the mouse down with long left eye hold
 isMouseDown = False
->>>>>>> lakpa
 while True:
     ret, frame = cam.read()
     if not ret:

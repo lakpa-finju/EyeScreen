@@ -59,8 +59,8 @@ while True:
     #right_eye_landmarks = [362, 382, 383, 384, 385, 386, 387, 388, 390, 398]
     right_eye_upper_landmarks = [362,398,384,385,386,387,388,466,263]
     right_eye_lower_landmarks = [362,382,381,380,374,373,390,249,263]
-    left_iris_landmarks = [468, 469, 470, 471]
-    right_iris_landmarks = [473, 474, 475, 476]
+    left_iris_landmarks = [468, 469, 470, 471, 472]
+    right_iris_landmarks = [473, 474, 475, 476, 477]
     MOUTH_LANDMARKS = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, 375, 321, 405, 314, 17, 84, 181, 91, 146, 61]
 
     frame_h, frame_w, _ = frame.shape
@@ -75,7 +75,7 @@ while True:
         move_mouse(screen_w, avg_x, screen_h, avg_y)
 
         # Draw landmarks for the iris
-        for idx in right_eye_lower_landmarks: #right_iris_landmarks:
+        for idx in left_iris_landmarks:
             x = int(landmarks[idx].x * frame_w)
             y = int(landmarks[idx].y * frame_h)
             cv2.circle(frame, (x, y), 3, (0, 255, 0))
@@ -85,21 +85,27 @@ while True:
 #            y = int(landmarks[idx].y * frame_h)
 #            cv2.circle(frame, (x, y), 3, (0, 255, 0))
 #
+        #pupil movement for back and forth
+        model.back_n_forth(frame, landmarks, frame_w, frame_h)
+
+        #eyerbow for scrolling movement
         model.eyebrows(frame, landmarks, frame_w, frame_h)
         #left eyebrow movement
         #model.left_eyebrow(frame,landmarks, frame_w, frame_h)
         #rigt eyebrow movement
         #model.right_eyebrow(frame, landmarks, frame_w, frame_h)
-        #mouth open is action
+
+        #mouth open is action for speech to text
         model.mouth_open(frame, landmarks, frame_w, frame_h, isOpen)
-        #right wink
+
+        #right wink for mouse right click
         model.right_wink(frame, landmarks, frame_w,frame_h)
+
         # Detect left wink (blinking)
         # model.left_wink(frame, landmarks,frame_w,frame_h)
-        # Detect Smile
+
+        # Detect Smile for scrolling movement
         model.smile(frame, landmarks,frame_w,frame_h)
-
-
 
         #left eye 
         left_eye_upper_landmarks = np.array([landmarks[idx].y for idx in left_eye_upper_landmarks])

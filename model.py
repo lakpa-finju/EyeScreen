@@ -6,13 +6,30 @@ import pyautogui
 import time
 
 
+#pupil movement for back and forth between pages 
+def back_n_forth(frame, landmarks, frame_w, frame_h):
+    left_pupil = [landmarks[133],landmarks[468]]
+    right_pupil = [landmarks[263],landmarks[473]]
+    print('***********')
+    print(left_pupil[0].x - left_pupil[1].x)
+    print(right_pupil[0].x - right_pupil[1].x)
+    if (left_pupil[0].x - left_pupil[1].x <= 0.018) and (right_pupil[0].x - right_pupil[1].x <=0.018):
+        print("forth")
+        pyautogui.hotkey('command','right')
+    elif (left_pupil[0].x - left_pupil[1].x >= 0.028) and (right_pupil[0].x - right_pupil[1].x >=0.028):
+        print("back")
+        pyautogui.hotkey('command','left')
+    else:
+        print("center")
+
+
 #apply happy face for down scroll
 def smile(frame, landmarks, frame_w, frame_h):
     leftWisker = [landmarks[61]]
     rightWisker = [landmarks[291]]#[269, 270, 409, 291, 375, 321, 405]
-    print('********')
-    print(abs(leftWisker[0].x - rightWisker[0].x))
-    print(abs(leftWisker[0].y - rightWisker[0].y))
+#    print('********')
+#    print(abs(leftWisker[0].x - rightWisker[0].x))
+#    print(abs(leftWisker[0].y - rightWisker[0].y))
     for landmark in leftWisker:
         x = int(landmark.x * frame_w)
         y = int(landmark.y * frame_h)
@@ -30,15 +47,6 @@ def smile(frame, landmarks, frame_w, frame_h):
 def eyebrows(frame, landmarks, frame_w, frame_h):
     left_eye_brow = [landmarks[66], landmarks[69]]
     right_eye_brow = [landmarks[296], landmarks[299]]
-#    for landmarkLeft, landmarkRight in zip(left_eyebrow, right_eyebrow):
-#        #left eyebrow
-#        xLeft = int(landmarkLeft.x * frame_w)
-#        yLeft = int(landmarkLeft.y * frame_h)
-#        cv2.circle(frame, (xLeft, yLeft), 3, (0, 255, 255))
-#        #right eyebrow
-#        xRight = int(landmarkRight.x * frame_w)
-#        yRight = int(landmarkRight.y * frame_h)
-#        cv2.circle(frame, (xRight, yRight), 3, (0, 255, 255))
 
     if (abs(left_eye_brow[0].y - left_eye_brow[1].y) < 0.040) and (abs(right_eye_brow[0].y - right_eye_brow[1].y) < 0.040):
         print("both eyebrow detected")

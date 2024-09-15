@@ -74,8 +74,6 @@ while True:
         # Calculate average position of the iris
         avg_x = sum(landmarks[idx].x for idx in right_iris_landmarks) / len(right_iris_landmarks)
         avg_y = sum(landmarks[idx].y for idx in right_iris_landmarks) / len(right_iris_landmarks)
-        if not calabrated:
-            pass
             
         # Move the mouse cursor based on smoothed eye positions
         move_mouse(screen_w, avg_x, screen_h, avg_y)

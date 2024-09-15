@@ -12,6 +12,7 @@ screen_w, screen_h = pyautogui.size()
 # Initialize smoothing variables
 alpha = 0.5  # Smoothing factor (between 0 and 1)
 prev_x, prev_y = 0.5, 0.5  # Initial previous positions (normalized)
+pyautogui.PAUSE = 0.01
 
 # Variable to manage the timing of clicks
 last_click_time = 0
@@ -39,9 +40,14 @@ def move_mouse(screen_width, x, screen_height, y):
     
     pyautogui.moveTo(screen_x, screen_y)
 
-#check if text dictation is open
+#check if text dictation is open for speech to text
 isOpen = False
+<<<<<<< HEAD
 calabrated = False
+=======
+#boolean to control the mouse down with long left eye hold
+isMouseDown = False
+>>>>>>> lakpa
 while True:
     ret, frame = cam.read()
     if not ret:
@@ -88,6 +94,9 @@ while True:
 #            x = int(landmarks[idx].x * frame_w)
 #            y = int(landmarks[idx].y * frame_h)
 #            cv2.circle(frame, (x, y), 3, (0, 255, 0))
+
+        #pupil up and down for pressEnter
+        model.pressEnter(frame, landmarks, frame_w, frame_h)
 #
         #pupil movement for back and forth
         model.back_n_forth(frame, landmarks, frame_w, frame_h)
@@ -112,6 +121,8 @@ while True:
         # Detect Smile for scrolling movement
         model.smile(frame, landmarks,frame_w,frame_h)
 
+        #Left wink ovepration is still magaged here due to time interval association
+
         #left eye 
         left_eye_upper_landmarks = np.array([landmarks[idx].y for idx in left_eye_upper_landmarks])
         left_eye_lower_landmarks = np.array([landmarks[idx].y for idx in left_eye_lower_landmarks])
@@ -124,15 +135,18 @@ while True:
 
         current_time = cv2.getTickCount() / cv2.getTickFrequency()
         if abs(np.sum(res_left_eye)) < 0.012 and abs(np.sum(res_right_eye)) > 0.015:
-            print("wink")
-
             if current_time - last_click_time >= click_interval:
                 print("wink")
                 pyautogui.click()
                 last_click_time = current_time  # Update last click time
             else:
-                print("long wink")
-                pyautogui.mouseDown(button='left')
+                if isMouseDown:
+                    pyautogui.mouseUp(button = 'left')
+                    isMouseDown = False
+                else:
+                    print("long wink")
+                    pyautogui.mouseDown(button='left')
+                    isMouseDown = True
 
 #        left = [landmarks[145], landmarks[159]]
 #        right = [landmarks[374], landmarks[386]]

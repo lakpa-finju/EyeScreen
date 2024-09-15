@@ -53,12 +53,18 @@ while True:
     output = face_mesh.process(rgb_frame)
     landmark_points = output.multi_face_landmarks
 
-    # Indices for the eye landmarks (including irises)
-    left_eye_landmarks = [33, 133, 144, 145, 153, 154, 155, 159, 160, 161, 163, 173]
-    right_eye_landmarks = [362, 382, 383, 384, 385, 386, 387, 388, 390, 398]
+    # Indices for the eye landmarks (including irises) and Mouth
+    #left_eye_landmarks = [33, 133, 144, 145, 153, 154, 155, 159, 160, 161, 163, 173]
+    left_eye_upper_landmarks = np.array([33,246,161,160,159,158,157,173,133]) 
+    left_eye_lower_landmarks = np.array([33,7, 163,144,145,153,154,155,133])
+
+    #right_eye_landmarks = [362, 382, 383, 384, 385, 386, 387, 388, 390, 398]
+    right_eye_upper_landmarks = [362,398,384,385,386,387,388,466,263]
+    right_eye_lower_landmarks = [362,382,381,380,374,373,390,249,263]
     left_iris_landmarks = [468, 469, 470, 471]
     right_iris_landmarks = [473, 474, 475, 476]
     MOUTH_LANDMARKS = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, 375, 321, 405, 314, 17, 84, 181, 91, 146, 61]
+
     frame_h, frame_w, _ = frame.shape
     if landmark_points:
         landmarks = landmark_points[0].landmark
@@ -73,7 +79,7 @@ while True:
         move_mouse(screen_w, avg_x, screen_h, avg_y)
 
         # Draw landmarks for the iris
-        for idx in right_iris_landmarks:
+        for idx in right_eye_lower_landmarks: #right_iris_landmarks:
             x = int(landmarks[idx].x * frame_w)
             y = int(landmarks[idx].y * frame_h)
             cv2.circle(frame, (x, y), 3, (0, 255, 0))
@@ -99,16 +105,21 @@ while True:
         model.smile(frame, landmarks,frame_w,frame_h)
 
 
-        left = [landmarks[145], landmarks[159]]
-        right = [landmarks[374], landmarks[386]]
-        for landmark in left:
-            x = int(landmark.x * frame_w)
-            y = int(landmark.y * frame_h)
-            cv2.circle(frame, (x, y), 3, (0, 255, 255))
+
+        #left eye 
+        left_eye_upper_landmarks = np.array([landmarks[idx].y for idx in left_eye_upper_landmarks])
+        left_eye_lower_landmarks = np.array([landmarks[idx].y for idx in left_eye_lower_landmarks])
+        res_left_eye = np.subtract(left_eye_upper_landmarks,left_eye_lower_landmarks)
+
+        #right eye
+        right_eye_upper_landmarks = np.array([landmarks[idx].y for idx in right_eye_upper_landmarks])
+        right_eye_lower_landmarks = np.array([landmarks[idx].y for idx in right_eye_lower_landmarks])
+        res_right_eye = np.subtract(right_eye_upper_landmarks,right_eye_lower_landmarks)
 
         current_time = cv2.getTickCount() / cv2.getTickFrequency()
-        if (abs(left[0].y - left[1].y) < 0.012) and (abs(right[0].y - right[1].y) > 0.015):
-            x = 0
+        if abs(np.sum(res_left_eye)) < 0.012 and abs(np.sum(res_right_eye)) > 0.015:
+            print("wink")
+
             if current_time - last_click_time >= click_interval:
                 print("wink")
                 pyautogui.click()
@@ -116,6 +127,24 @@ while True:
             else:
                 print("long wink")
                 pyautogui.mouseDown(button='left')
+
+#        left = [landmarks[145], landmarks[159]]
+#        right = [landmarks[374], landmarks[386]]
+#        for landmark in left:
+#            x = int(landmark.x * frame_w)
+#            y = int(landmark.y * frame_h)
+#            cv2.circle(frame, (x, y), 3, (0, 255, 255))
+
+#        current_time = cv2.getTickCount() / cv2.getTickFrequency()
+#        if (abs(left[0].y - left[1].y) < 0.012) and (abs(right[0].y - right[1].y) > 0.015):
+#            x = 0
+#            if current_time - last_click_time >= click_interval:
+#                print("wink")
+#                pyautogui.click()
+#                last_click_time = current_time  # Update last click time
+#            else:
+#                print("long wink")
+#                pyautogui.mouseDown(button='left')
             
 
     cv2.imshow('Eye Controlled Mouse', frame)

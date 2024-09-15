@@ -10,9 +10,9 @@ import time
 def back_n_forth(frame, landmarks, frame_w, frame_h):
     left_pupil = [landmarks[133],landmarks[468]]
     right_pupil = [landmarks[263],landmarks[473]]
-    print('***********')
-    print(left_pupil[0].x - left_pupil[1].x)
-    print(right_pupil[0].x - right_pupil[1].x)
+#    print('***********')
+#    print(left_pupil[0].x - left_pupil[1].x)
+#    print(right_pupil[0].x - right_pupil[1].x)
     if (left_pupil[0].x - left_pupil[1].x <= 0.018) and (right_pupil[0].x - right_pupil[1].x <=0.018):
         print("forth")
         pyautogui.hotkey('command','right')

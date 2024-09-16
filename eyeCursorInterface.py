@@ -13,6 +13,7 @@ screen_w, screen_h = pyautogui.size()
 alpha = 0.5  # Smoothing factor (between 0 and 1)
 prev_x, prev_y = 0.5, 0.5  # Initial previous positions (normalized)
 pyautogui.PAUSE = 0.01
+pyautogui.FAILSAFE = False
 
 # Variable to manage the timing of clicks
 last_click_time = 0
@@ -128,19 +129,21 @@ while True:
         res_right_eye = np.subtract(right_eye_upper_landmarks,right_eye_lower_landmarks)
 
         current_time = cv2.getTickCount() / cv2.getTickFrequency()
-        if abs(np.sum(res_left_eye)) < 0.012 and abs(np.sum(res_right_eye)) > 0.015:
-            if current_time - last_click_time >= click_interval:
-                print("wink")
-                pyautogui.click()
-                last_click_time = current_time  # Update last click time
-            else:
-                if isMouseDown:
-                    pyautogui.mouseUp(button = 'left')
-                    isMouseDown = False
-                else:
-                    print("long wink")
-                    pyautogui.mouseDown(button='left')
-                    isMouseDown = True
+        print("left: ",abs(np.sum(res_left_eye)) )
+        print("right:",abs(np.sum(res_right_eye)))
+        if abs(np.sum(res_left_eye)) < 0.020 and abs(np.sum(res_right_eye)) > 0.015:
+            #if current_time - last_click_time >= click_interval:
+            print("wink")
+            pyautogui.click()
+            #last_click_time = current_time  # Update last click time
+#            else:
+#                if isMouseDown:
+#                    pyautogui.mouseUp(button = 'left')
+#                    isMouseDown = False
+#                else:
+#                    print("long wink")
+#                    pyautogui.mouseDown(button='left')
+#                    isMouseDown = True
 
 #        left = [landmarks[145], landmarks[159]]
 #        right = [landmarks[374], landmarks[386]]
@@ -161,7 +164,7 @@ while True:
 #                pyautogui.mouseDown(button='left')
             
 
-    cv2.imshow('Eye Controlled Mouse', frame)
+    #cv2.imshow('Eye Controlled Mouse', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 

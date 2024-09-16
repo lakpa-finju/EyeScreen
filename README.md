@@ -1,39 +1,77 @@
-## Inspiration
-The recent AI revolution has been dominated by chatbots and language models, but we saw an opportunity to harness the power of computer vision to create something new. We asked ourselves: what if technology could be controlled with just a glance? Imagine being able to scroll through an article on your laptop while eating lunch, or navigating your tablet with ease, hands-free. We realized that existing solutions for people with disabilities were often outdated, expensive, or required specialized hardware and software. This sparked our idea to apply recent advancements in computer vision to create EyeScreen, an innovative solution that makes technology more accessible and intuitive for everyone.
+# EyeScreen: A Hands-Free Human-Computer Interaction System
 
-## What it does
-Imagine a world where technology responds to your every glance. With EyeScreen, you can control your computer, navigate your digital life, and interact with the world around you with just a look. Our revolutionary technology harnesses the power of face-tracking to unlock a new era of intuitive, hands-free control.
+**EyeScreen** is a hands-free interface designed to revolutionize the way we interact with computers, leveraging real-time facial tracking and eye-pupil movement to control mouse navigation, browse web pages, and interact with applications without the need for traditional input devices like keyboards or mice.
 
-## Using EyeScreen, you can:
+This project was developed during a hackathon and utilizes cutting-edge technology such as **Google's Mediapipe framework**, **Apple's built-in text-to-speech dictation**, and several **Python modules** to create a truly accessible and innovative user experience.
 
-Navigate your computer system with your eyes, moving the cursor with a glance
-Click and interact with your computer using subtle facial expressions, such as blinking for left and right clicks
-Activate speech-to-text with a simple mouth movement
-Browse the internet and manage auto-scroll with precise eye movements and eyebrow gestures
-With EyeScreen, you can achieve all the functionality of a traditional keyboard and trackpad, hands-free. Our technology empowers you to interact with your computer in a more natural, intuitive way, using the subtle movements of your face and eyes.
-How we built it
-We leveraged a combination of cutting-edge technologies to bring EyeScreen to life. Our tech stack includes:
+## Features
+- **Head Gesture Control**: Move the mouse cursor using head movements.
+- **Eye-Pupil Tracking for Navigation**: Navigate between web pages by looking left to go back or right to move forward.
+- **Auto-Scroll via Smile and Eyebrow Raise**: Smile to scroll down and raise your eyebrows to scroll up.
+- **Hands-Free Clicks**: Blink for left-click and other gestures for right-click.
+- **Speech-to-Text**: Use Apple’s built-in dictation for seamless text input.
+  
+## Installation
 
-OpenCV2 for real-time face tracking and live-stream camera processing
-MediaPipe's Face Landmark technology to accurately track facial muscles and eye movements
-NumPy for efficient array and matrix data processing
-PyAutoGUI for simulating user interactions, such as cursor movement, clicks, and navigation
-Apple's built-in Speech-to-Text dictation technology for seamless voice input
-By integrating these technologies, we created a robust and efficient system that enables users to control their devices with ease. Our architecture allows for real-time processing of facial expressions, eye movements, and voice commands, providing a seamless and intuitive user experience.
-## Challenges we ran into
-A constant challenge during the development of EyeScreen was prioritizing input commands due to the limited number of distinct facial features we could track. With only a finite range of facial expressions and movements available, we needed to determine which commands would be most intuitive and useful while avoiding confusion and overlap.
+### Prerequisites
 
-Balancing a responsive control system with the constraints of facial recognition technology required us to carefully evaluate which facial movements could be reliably detected and effectively used. We explored various methods to make the most of each facial feature, ensuring that the controls remained intuitive and user-friendly.
+Make sure you have the following installed on your system:
 
-## Accomplishments that we're proud of
-We’re incredibly proud of what we’ve achieved with EyeScreen. Our innovative system seamlessly transforms facial movements into intuitive, hands-free control, breaking new ground in accessibility and user experience. By expertly integrating cutting-edge technologies like OpenCV2, MediaPipe, and PyAutoGUI, we’ve crafted a real-time, high-performance solution that’s both responsive and intuitive. EyeScreen not only sets a new standard for interacting with technology but also opens doors for more inclusive and adaptive computing.
+- Python 3.x
+- Pip (Python package manager)
 
-## What we learned
-During the development of EyeScreen, we gained crucial insights into mapping and interpreting facial movements, including eye, eyebrow, mouth, and blinking actions. We discovered that accurately tracking these subtle movements required a delicate balance between precision and real-time performance.
+Clone the repository:
+``` 
+git clone https://github.com/lakpa-finju/EyeScreen.git 
+cd EyeScreen
+```
 
-Mapping eye and eyebrow movements taught us how to translate these gestures into intuitive controls, such as scrolling and navigation, while ensuring the system remained responsive and reliable. We learned to refine our algorithms to distinguish between various expressions and gestures, enhancing the system’s ability to interpret user intentions accurately.
+Install Dependencies
+Run the following command to install required Python modules:
+```
+pip install -r requirements.txt
+```
+The dependencies include:
 
-## What's next for EyeScreen
-Development is an ongoing process, but the technology is now fully ready for everyday use. It performs all the tasks a standard keyboard and mouse can handle, and offers additional functionalities that extend beyond basic tools. With intuitive controls and comprehensive features already integrated, the technology is designed to be an affordable solution accessible to anyone with a computer. The next step is to focus on distribution, ensuring that it reaches those who can benefit from it most.
+mediapipe: For real-time facial and eye-tracking
+opencv-python: For image processing
+pyautogui: For controlling mouse and keyboard programmatically
+pyttsx3: For text-to-speech conversion
+speech_recognition: For speech-to-text conversion
 
+## Setup for Apple Dictation (macOS Only)
+Ensure that you have Apple's Dictation feature enabled on your macOS device. You can enable this via:
+
+1. System Preferences > Keyboard > Dictation.
+2. Enable Dictation and use the default shortcut (double-tap the ctrl key).
+
+## Running the Application
+To start the application, run the following:
+```
+python3 eyeCursorInterface.py 
+```
+This will launch the EyeScreen interface and begin tracking your facial gestures and eye movements for hands-free control.
+
+Usage Guide
+1. Mouse Navigation
+* Move your head to control the mouse cursor.
+* Blink your left eye for a left-click and your right eye for a right-click.
+
+2. Web Page Navigation (Eye-Pupil Movement)
+* Look Left: Go back to the previous webpage.
+* Look Right: Move forward to the next webpage.
+
+3. Auto-Scrolling
+* Smile: Scroll down the webpage or document.
+* Raise Eyebrows: Scroll up.
+
+4. Speech-to-Text
+* Activate Apple’s built-in dictation by opening your mouth a bit larger than your usual speaking position.  
+
+## Demo Video
+Check out the demo video showcasing EyeScreen’s capabilities: 
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=WFF7fUI0fY8" frameborder="0" allowfullscreen></iframe>
+
+# Contributing
+If you'd like to contribute to EyeScreen, feel free to fork the repository and submit pull requests. Contributions such as new features, bug fixes, and optimizations are welcome!
 

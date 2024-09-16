@@ -63,7 +63,7 @@ Usage Guide
 
 ## Demo Video
 Check out the demo video showcasing EyeScreen’s capabilities: 
-[![Watch the video]]("https://www.youtube.com/watch?v=WFF7fUI0fY8")
+[![EyeScreen Demo](https://img.youtube.com/vi/WFF7fUI0fY8/0.jpg)](https://www.youtube.com/watch?v=WFF7fUI0fY8)
 
 # Contributing
 If you'd like to contribute to EyeScreen, feel free to fork the repository and submit pull requests. Contributions such as new features, bug fixes, and optimizations are welcome!
